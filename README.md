@@ -10,7 +10,7 @@ What need to point out is that, the model in this Repo is mainly written by **Py
 ## Introduction
 - Paper Titile : [ManTra-Net : Manipulation Tracing Network for Detection and Localization of Image Forgeries with Anomalous Features.](https://openaccess.thecvf.com/content_CVPR_2019/html/Wu_ManTra-Net_Manipulation_Tracing_Network_for_Detection_and_Localization_of_Image_CVPR_2019_paper.html)
 
-- Part of Abstract : The ManTra-Net is an end-to-end net work that performs both detection and localization without extra preprocessing and postprocessing. This model have ability to fight against real-life image forgery, which commonly involves different types and combined manipulations.
+- Part of Abstract: The ManTra-Net is an end-to-end network that performs both detection and localization without extra preprocessing and postprocessing. This model has the ability to fight against real-life image forgery, which commonly involves different types and combined manipulations.
 
 - Overview of the architectue:
   
@@ -32,7 +32,7 @@ What need to point out is that, the model in this Repo is mainly written by **Py
   - [convlstm.py](imports/convlstm.py) An implementation of ConvLSTM layer, which was cited from [ndrplz's Github repo](https://github.com/ndrplz/ConvLSTM_pytorch).
 - What's more there is a [ParametersManager.py](imports/ParametersManager.py) file in `./imports` dir. This is a part of code helps me to save parameters after tarinning for several batches, and load parameters then.
 - [Train.py](Train.py) is the main script for model trainning.
-- [TestModel.py](TestModel.py) can illustrate the performance of the model (`*.pt`) you trained. It shows 4 sub-figues in a plt, including the : Raw picture, label mask, prediction feature, prediction mask.
+- [TestModel.py](TestModel.py) can illustrate the performance of the model (`*.pt`) you trained. It shows 4 sub-figures in a plt, including(From left to right): Raw picture, label mask, predict feature, predict mask.
  
   ![](images/result-100EPOCH.png)
 
