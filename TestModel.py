@@ -1,4 +1,3 @@
-from operator import mod
 import torch
 from Train import MyDataset
 from imports.ParametersManager import *
@@ -7,8 +6,10 @@ from matplotlib import pyplot as plt
 import torchvision.transforms as transforms
 
 # Enter the *.pt model file name here to load parameters
-ModelName = './MantraNet on NIST16_model (8).pt' 
-ModelName = './MantraNet on NIST16_model (13).pt'
+DIR = './Pre_TrainedModel/'
+
+# ModelName = DIR + 'MantraNet on NIST16_model (8).pt' 
+ModelName = DIR + 'MantraNet on NIST16_model (13).pt'
 
 parManager = ParametersManager('cuda')
 parManager.loadFromFile(ModelName)
@@ -17,7 +18,8 @@ model = ManTraNet()
 model.cuda()
 parManager.setModelParameters(model)
 
-data = MyDataset()
+TestSetDIR = './NIST2016/Test.csv'
+data = MyDataset(TestSetDIR)
 
 with torch.no_grad():
     model.eval()

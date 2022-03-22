@@ -12,12 +12,28 @@ from matplotlib import pyplot as plt
 import torchvision.transforms as transforms
 import csv
 
+'''
+Notice: This Trainning script is used to train on NIST16 manipulation detect dataset.
+
+Spliting rate of Trainning set and Test set is shown below: (You can create your own split by run codes in ./NC2016_Test0613/)
+
+    ---Raw Dataset---
+    There are 1124 pictures in total.
+    There are 49.82% of No-manipulated pictures while 50.18% of manipulated.
+    ---Splited dataset---
+    len(Train.csv): 900
+    len(test.csv): 224
+        ---Trainning set proportion---
+        There are 49.89% of No-manipulated pictures while 50.11% of manipulated.
+        ---Testing set proportion---
+        There are 49.55% of No-manipulated pictures while 50.45% of manipulated.
+'''
+
 # 超参数
 # Super parameters
 MODELNAME='MantraNet on NIST16'  # Name of the model
 MODELFILEDIR = './'              # 模型参数存储路径  The saving dir for model parameters
-TrainRateToWhole = 0.8           # The rate of separating the Trainning set and the validate set.
-BatchSize = 1
+BatchSize = 4
 LEARNINGRATE = 1e-4
 epochNums = 5
 SaveModelEveryNEpoch = 2         # 每执行多少次保存一个模型 Save model when runing every n epoch
@@ -32,13 +48,14 @@ MODELFILEPATH = os.path.join(MODELFILEDIR, MODELNAME+'_model.pt')
 # 图片素材和索引路径：
 # Image file path (Dataset) and the path of indexing csv file 
 ImagePath = './NIST2016/'
-ImageIndex = './NIST2016/index.csv'
+TrainDatasetIndex = './NIST2016/Train.csv'
+TestDatasetIndex = './NIST2016/Test.csv'
 
 # 可以将数据线包装为Dataset，然后传入DataLoader中取样
 # Build a Dataset for local datas
 class MyDataset(Dataset):
-    def __init__(self) -> None:
-        with open(ImageIndex, 'r') as f:
+    def __init__(self, Path) -> None:
+        with open(Path, 'r') as f:
             reader = csv.reader(f)
             self.index = []
             for i in reader:
@@ -52,8 +69,9 @@ class MyDataset(Dataset):
             mask = Image.open("{}{}".format(ImagePath, self.index[i][1]))
             mask = mask.convert("1")
             mask = self.trans(mask)
+            mask = 1 - mask
         else:
-            mask = torch.ones((1, image.shape[1], image.shape[2]))
+            mask = torch.zeros((1, image.shape[1], image.shape[2]))
         return image, mask
     
     def __len__(self):
@@ -88,16 +106,15 @@ if __name__ == "__main__":
     
     # 构建数据集
     # Constrct the dataset
-    Datas = MyDataset()
-    whole_size = len(Datas)
-    train_size = int(whole_size * TrainRateToWhole)
-    test_size = whole_size - train_size
-    print(train_size)
-    print(test_size)
+    TrainDataset = MyDataset(TrainDatasetIndex)
+    TestDataset = MyDataset(TestDatasetIndex)
 
-    # 分割数据集
-    # Split dataset in TrainingSet and TestSet
-    TrainDataset, TestDataset = random_split(dataset = Datas, lengths = [train_size,test_size],generator=torch.Generator().manual_seed(0))
+    print('Trainset size: {}'.format(len(TrainDataset)))
+    print('Testset size: {}'.format(len(TestDataset)))
+
+    # # 分割数据集
+    # # Split dataset in TrainingSet and TestSet
+    # TrainDataset, TestDataset = random_split(dataset = Datas, lengths = [train_size,test_size],generator=torch.Generator().manual_seed(0))
 
     # 构建训练集读取器
     # Consruct the Dataloader for both datasets
