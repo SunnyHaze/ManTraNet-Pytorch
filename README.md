@@ -30,7 +30,7 @@ What need to point out is that, the model in this Repo is mainly written by **Py
   - [ZPool2D.py](imports/ZPool2D.py) An algorithm proposed in this ManTra-Net article. Aiming to quantify the difference between a local feature and a reference dominant feature.
   - [convlstm.py](imports/convlstm.py) An implementation of ConvLSTM layer, which was cited from [ndrplz's Github repo](https://github.com/ndrplz/ConvLSTM_pytorch).
 - What's more there is a [ParametersManager.py](imports/ParametersManager.py) file in `./imports` dir. This is a part of code helps me to save parameters after tarinning for several batches, and load parameters then.
-- [Train.py](Train.py) is the main script for model trainning.
+- [Train.py](Train.py) is the main script for model trainning on **NIST16 dataset**. If you want to run this file, you need to load NIST16 data in advance. Please read this [NIST16 Dataset README](NC2016_Test0613/README.md) for tutorials.
 - [TestModel.py](TestModel.py) can illustrate the performance of the model (`*.pt`) you trained. It shows 4 sub-figures in a plt, including(From left to right): Raw picture, label mask, predict feature, predict mask.
  
   ![](images/result-100EPOCH.png)
