@@ -37,6 +37,15 @@ What need to point out is that, the model in this Repo is mainly written by **Py
 
 ## Cite
 [1] Wu, Y., AbdAlmageed, W., & Natarajan, P. (2019). Mantra-net: Manipulation tracing network for detection and localization of image forgeries with anomalous features. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 9543-9552).
+  ```
+  @InProceedings{Wu_2019_CVPR,
+    author = {Wu, Yue and AbdAlmageed, Wael and Natarajan, Premkumar},
+    title = {ManTra-Net: Manipulation Tracing Network for Detection and Localization of Image Forgeries With Anomalous Features},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month = {June},
+    year = {2019}
+  }
+  ```
 
 [2] Bayar, B., & Stamm, M. C. (2018). Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection. IEEE Transactions on Information Forensics and Security, 13(11), 2691-2706.
 
