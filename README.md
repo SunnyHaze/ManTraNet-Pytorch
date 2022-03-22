@@ -1,7 +1,6 @@
 # ManTra-Net reproducing with pytorch
-![Powered by](https://img.shields.io/badge/Based_on-Pytorch-blue?logo=pytorch)
-![GitHub repo size](https://img.shields.io/github/repo-size/SunnyHaze/ManTra-Net_Pytorch?logo=hack%20the%20box)
-![GitHub](https://img.shields.io/github/license/Sunnyhaze/ManTra-Net_Pytorch?logo=license)
+![Powered by](https://img.shields.io/badge/Based_on-Pytorch-blue?logo=pytorch) ![GitHub repo size](https://img.shields.io/github/repo-size/SunnyHaze/ManTra-Net_Pytorch?logo=hack%20the%20box) ![GitHub](https://img.shields.io/github/license/Sunnyhaze/ManTra-Net_Pytorch?logo=license)  [![Ask Me Anything !](https://img.shields.io/badge/Official%20-No-1abc9c.svg)](https://GitHub.com/Sunnyhaze) ![visitors](https://visitor-badge.glitch.me/badge?page_id=Sunnyhaze.ManTraNet-pytorch)
+
 
 This repository provides a reproduction of ManTra-Net which was proposed in CVPR 2019 by Yue Wu et al. 
 
