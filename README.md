@@ -34,6 +34,17 @@ What need to point out is that, the model in this Repo is mainly written by **Py
 - [TestModel.py](TestModel.py) can illustrate the performance of the model (`*.pt`) you trained. It shows 4 sub-figures in a plt, including(From left to right): Raw picture, label mask, predict feature, predict mask.
  
   ![](images/result-100EPOCH.png)
+- [TestModelAUC.py](TestModelAUC.py) can calculate the AUC and ROC for you on trained models.
+
+## Some Comments
+It should be noted that this model gives poor results if predicted without using the official pre-training parameters. The ROC curve below demonstrated that **simply training and validating from the NIST16 dataset does not give good results**. 
+
+![](images/ROC_100Epoch.png)
+
+However, we need to point out that in order to accelerate the trainning process, we resized images to (256x256), which reduced a lot of features, especially noise features. This problem has been discussed in the ManTra-Net paper as well. (Resize and JPEG compress will vitally do harm to the performance of the model) 
+
+>We speculate that it is the strong dataset with 385 types of fine-grained manipulation images that made the model performs well. Sadly this dataset is not open to public :(
+
 
 ## Cite
 [1] Wu, Y., AbdAlmageed, W., & Natarajan, P. (2019). Mantra-net: Manipulation tracing network for detection and localization of image forgeries with anomalous features. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 9543-9552).

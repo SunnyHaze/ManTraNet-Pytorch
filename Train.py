@@ -34,7 +34,7 @@ Spliting rate of Trainning set and Test set is shown below: (You can create your
 MODELNAME='MantraNet on NIST16'  # Name of the model
 MODELFILEDIR = './'              # 模型参数存储路径  The saving dir for model parameters
 BatchSize = 4
-LEARNINGRATE = 1e-4
+LEARNINGRATE = 1e-5
 epochNums = 5
 SaveModelEveryNEpoch = 2         # 每执行多少次保存一个模型 Save model when runing every n epoch
 device = 'cuda' if torch.cuda.is_available() else 'cpu'

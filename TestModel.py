@@ -8,37 +8,39 @@ import torchvision.transforms as transforms
 # Enter the *.pt model file name here to load parameters
 DIR = './Pre_TrainedModel/'
 
-# ModelName = DIR + 'MantraNet on NIST16_model (8).pt' 
-ModelName = DIR + 'MantraNet on NIST16_model (13).pt'
+# ===You need to change the name of the model here =====
+ModelName = DIR + 'MantraNet on NIST16_model (8).pt' 
+# ====================================================
 
 parManager = ParametersManager('cuda')
 parManager.loadFromFile(ModelName)
-
+print("This model has done : {} Epochs.".format(parManager.EpochDone))
 model = ManTraNet()
 model.cuda()
 parManager.setModelParameters(model)
 
+TrainSetDIR = './NIST2016/Train.csv'
 TestSetDIR = './NIST2016/Test.csv'
-data = MyDataset(TestSetDIR)
+
+'''
+You can set the TrainSetDIR or TestSetDIR to validate on different dataset.
+'''
+data = MyDataset(TrainSetDIR)
 
 with torch.no_grad():
     model.eval()
     Loader = DataLoader(data, pin_memory=True, batch_size=1, sampler= torch.utils.data.sampler.SubsetRandomSampler(range(len(data))))
     trans = transforms.ToPILImage()
     for (x,label) in Loader:
-        print(x.shape)
-        print(label.shape)
         out = model(x.cuda())
-        print(out.shape)
-
         x = trans(torch.squeeze(x,0))
-
+        label[0,0,0] = 1
         y = trans(torch.squeeze(label,0))
         z = trans(torch.squeeze(out.cpu(),0))
         q = trans(torch.squeeze((out > 0.5).float().cpu(), 0 ))
-        print(torch.mean(out.cpu()))
-        print(torch.mean((out > 0.5).float().cpu()))
-        print(torch.mean(label))
+        print("mean(output): \n",torch.mean(out.cpu()))
+        print("\nmean((out>0.5).float) : \n", torch.mean((out > 0.2).float().cpu()))
+        print("\nmean(label):\n" ,torch.mean(label))
         plt.subplot(1,4,1)
         plt.imshow(x, cmap='gray')
         plt.subplot(1,4,2)
