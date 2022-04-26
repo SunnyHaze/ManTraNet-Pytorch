@@ -20,7 +20,7 @@ What need to point out is that, the model in this Repo is mainly written by **Py
   - [CombindConv2D.py](imports/CombindConv2D.py): The combination of 3 kinds of different layers:
     - BayarConv2D, first proposed by [Bayar in 2018](https://ieeexplore.ieee.org/ielaam/10206/8361165/8335799-aam.pdf). Its filters can be illustrate as the figure below. Has a stronger ability to detecte manipulations.
 
-      ![](images/bayar.png)
+      ![](images/Bayar.png)
 
     - SRMConv2D, first proposed in [this paper](http://www.isihome.ir/freearticle/ISIHome.ir-26078.pdf) and implemented in [this paper.](https://openaccess.thecvf.com/content_cvpr_2018/papers/Zhou_Learning_Rich_Features_CVPR_2018_paper.pdf) Three fixed filters are used to extract **noise features**. And when doing the process on RGB pictures, there will be 9 output channel for a 3 channel inputs.
      
