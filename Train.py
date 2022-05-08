@@ -66,12 +66,17 @@ class MyDataset(Dataset):
         image = Image.open("{}{}".format(ImagePath, self.index[i][0]))
         image = self.trans(image)
         if self.index[i][1] != 'N':
+            '''
+            this part is to generate a mask for manipulated images
+            '''
             mask = Image.open("{}{}".format(ImagePath, self.index[i][1]))
-            mask = mask.convert("1")
+            mask = mask.convert("1") # convert to 0-1 image with PIL api
             mask = self.trans(mask)
-            mask = 1 - mask
         else:
-            mask = torch.zeros((1, image.shape[1], image.shape[2]))
+            ''' 
+            torch.ones(...) generates a totally white image which represent to a mask of NO manipulation 
+            '''
+            mask = torch.ones((1, image.shape[1], image.shape[2]))
         return image, mask
     
     def __len__(self):
@@ -132,27 +137,31 @@ if __name__ == "__main__":
         print("===开始本轮的Epoch {} == 总计是Epoch {}===".format(epoch, parManager.EpochDone))
         
         # 收集训练参数
+        # Collect the tranning statistics
         epochAccuracy = []
         epochLoss = []
         model.train()
         #=============实际训练流程=================
+        #=============Trainning step start=================
         for batch_id, (inputs,label) in enumerate(TrainLoader):
             # torch.train()
-            # 先初始化梯度0
             optimizer.zero_grad()
             output = model(inputs.cuda())          
             loss = criterion(output,label.cuda())
             loss.backward()
             optimizer.step()
             epochAccuracy.append(accuracy(output,label.cuda()).cpu())
-            epochLoss.append(loss.item()) # 需要获取数值来转换
+            epochLoss.append(loss.item())
+            # print status
             if batch_id % (int(len(TrainLoader) / 20)) == 0: 
-                print("    当前运行到[{}/{}], 目前Epoch准确率为：{:.2f}%，Loss：{:.8f}".format(batch_id,len(TrainLoader), np.mean(epochAccuracy) * 100, loss))
+                print("    Now processing step[{}/{}], Current Epoch accuracy：{:.2f}%，Loss：{:.8f}".format(batch_id,len(TrainLoader), np.mean(epochAccuracy) * 100, loss))
         #==============本轮训练结束==============
+        #=============Trainning step finish=================
         # 收集训练集准确率
         TrainACC.append(np.mean(epochAccuracy)) 
         GlobalLoss.append(np.mean(epochLoss))
         # ==========进行一次验证集测试============
+        # ==========Start a test set test============
         localTestACC = []
         model.eval() # 进入评估模式，节约开销
         for inputs, label in TestLoader:
@@ -160,19 +169,20 @@ if __name__ == "__main__":
             output = model(inputs.cuda())
             localTestACC.append(accuracy(output,label.cuda()).cpu())
         # ==========验证集测试结束================
-        # 收集验证集准确率
+        # ==========test set test done============
         TestACC.append(np.mean(localTestACC))
-        print("当前Epoch结束，训练集准确率为：{:3f}%，测试集准确率为：{:3f}%".format(TrainACC[-1] * 100, TestACC[-1] * 100))
+        print("Current Epoch Done, Train accuracy: {:3f}%, Test accuracy: {:3f}%".format(TrainACC[-1] * 100, TestACC[-1] * 100))
         # 暂存结果到参数管理器
+        # Save results to parameters-manager
         parManager.oneEpochDone(LEARNINGRATE,TrainACC[-1],TestACC[-1],GlobalLoss[-1])
         # 周期性保存结果到文件
+        # Save model to file periodically
         if epoch == epochNums - 1 or epoch % SaveModelEveryNEpoch == 0:
             parManager.loadModelParameters(model)
             parManager.saveToFile(MODELFILEPATH)
             
-    # 查看此次训练之后结果
+    # ===========view the results=============
     parManager.show()
-    # 绘图
     plt.figure(figsize=(10,7))
     plt.subplots_adjust(left=0.1,bottom=0.1,top=0.9,right=0.9,wspace=0.1,hspace=0.3)
     plt.subplot(2,1,1)

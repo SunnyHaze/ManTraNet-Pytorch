@@ -1,5 +1,4 @@
 import os
-from idna import valid_string_length
 from matplotlib.pyplot import imshow
 import torch
 from torch.utils.data import Dataset, DataLoader, TensorDataset
@@ -22,7 +21,7 @@ class L2Norm(nn.Module):
     def __init__(self) -> None:
         super().__init__()
     def forward(self, x):
-        a = torch.norm(x,2, keepdim=True) # 对于整个通道层求L2范数，并利用其进行标准化
+        a = torch.norm(x,2, keepdim=True) # 对于整个通道层求L2 Norm，并利用其进行标准化
         x = x / a
         return x
     
@@ -60,11 +59,11 @@ class ManTraNet(nn.Module):
             nn.Conv2d(256, 256, 3, 1, 1),
             L2Norm()
         )
-        # initialize the Conv layer with xavier_normal_
+        # # To ensure that the model can converge, you need to use xavier initialization
         for m in self.vgg.modules():
             if isinstance(m, nn.Linear):
                 pass
-            # 也可以判断是否为conv2d，使用相应的初始化方式 
+            #  you can also init your conv2d layer here
             elif isinstance(m, nn.Conv2d):
                 nn.init.xavier_normal_(m.weight) 
                 
@@ -72,8 +71,6 @@ class ManTraNet(nn.Module):
         self.BN = nn.BatchNorm2d(64, momentum=0.99, eps=0.001)
         self.ZPool = Zpool2D_Window(64, ZPoolingWindows)
         self.ConvLstm2D = ConvLSTM(input_dim = 64, hidden_dim=8, kernel_size=(7,7), num_layers=1, batch_first=True)
-        # todo 
-            # ConvLSTM 8@7x7
         self.decision = nn.Conv2d(8, 1, 7, 1, 3)
         self.sig = nn.Sigmoid()
     def forward(self, x):
@@ -85,7 +82,7 @@ class ManTraNet(nn.Module):
         x = self.BN(x)
         x = self.ZPool(x)
         _, last_states = self.ConvLstm2D(x)
-        x = last_states[0][0] # Todo 这里小概率有问题
+        x = last_states[0][0] 
         x = self.decision(x)
         x = self.sig(x)
         return x
