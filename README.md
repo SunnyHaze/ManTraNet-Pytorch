@@ -2,7 +2,7 @@
 ![Powered by](https://img.shields.io/badge/Based_on-Pytorch-blue?logo=pytorch) ![GitHub repo size](https://img.shields.io/github/repo-size/SunnyHaze/ManTra-Net_Pytorch?logo=hack%20the%20box) ![GitHub](https://img.shields.io/github/license/Sunnyhaze/ManTra-Net_Pytorch?logo=license)  [![Ask Me Anything !](https://img.shields.io/badge/Official%20-No-1abc9c.svg)](https://GitHub.com/Sunnyhaze) ![visitors](https://visitor-badge.glitch.me/badge?page_id=Sunnyhaze.ManTraNet-pytorch)
 
 
-This repository provides a reproduction of ManTra-Net which was proposed in CVPR 2019 by Yue Wu et al. 
+This repository provides a un-official inplementation of ManTra-Net which was proposed in CVPR 2019 by Yue Wu et al, **includes code for training**!. 
 
 What need to point out is that, the model in this Repo is mainly written by **Pytorch**, while the original paper provide a [Keras-Tensorflow sample on Github](https://github.com/ISICV/ManTraNet).
 
