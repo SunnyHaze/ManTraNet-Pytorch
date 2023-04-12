@@ -45,6 +45,10 @@ However, we need to point out that in order to accelerate the trainning process,
 
 >We speculate that it is the strong dataset with 385 types of fine-grained manipulation images that made the model performs well. Sadly this dataset is not open to public :(
 
+## Links
+If you want to train this Model with the CASIAv2 dataset, we provide a revised version of CASIAv2 datasets, which corrected several mistakes in the original datasets provided by the author. Details can find in the [link](https://github.com/SunnyHaze/CASIA2.0-Corrected-Groundtruth) shown below:
+
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Sunnyhaze&repo=CASIA2.0-Corrected-Groundtruth)](https://github.com/SunnyHaze/CASIA2.0-Corrected-Groundtruth)
 
 ## Cite
 [1] Wu, Y., AbdAlmageed, W., & Natarajan, P. (2019). Mantra-net: Manipulation tracing network for detection and localization of image forgeries with anomalous features. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 9543-9552).
